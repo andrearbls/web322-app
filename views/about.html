@@ -1,64 +1,94 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <!-- Latest compiled and minified Bootstrap 3.4.1 CSS -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-      <link rel="stylesheet" href="/css/main.css">
-      
-      <title>WEB322 - Assignment Template</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand" href="#">WEB322 - Andrea Robles</span>
-        </div>
-    
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="/blog">Blog</a></li>
-            <li class="active"><a href="/about">About</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/posts">Posts</a></li>
-            <li><a href="/categories">Categories</a></li>            
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container" style="padding-top:60px">
-      <div class="row">
-        <section class="main col-md-9">
-          <article>
-          <h2>About</h2>
-          <p>Hi there, my name is Andrea Robles, and I am currently enrolled in Computer Programming and Analysis at Seneca College, Newnham campus. I am in my third semester and so far I am really enjoying being in this program. I also graduated and have a diploma in Dental Hygiene from Oxford College of Business, Arts, and Technology. I am currently working part-time at a dental office as an office administrator/patient coordinator while studying full-time at the same time. Ever since I was in high school, I have always been interested in studying computers, however, most of my family members are in the dental career field that is why I got pressured to take a career that would fit in. During the time that I was working in the dental office, I realized that this career is not for me, so I took the big decision of changing my career by applying at Seneca College in order to get into the Computer Programming and Analysis program. I believe that if given a chance at obtaining something that will make us happy, it is worth the risk. Life is too short to live with regrets, and at this point, I can confidently say that I am happy with the decision I made in pursuing the Computer Programming and Analysis program.</p>
-          <p>During my free time, I do a lot of outdoor and indoor activities with my family and friends. For instance, when it is summertime I go hiking, fishing, and camping in different areas here in Ontario that I have not been to. I also like doing yoga and pilates in order to stay fit physically and mentally. In addition, I also want to share my favourite hobby during summer which is doing obstacle courses at Treetop Trekking. On the other hand, when it is wintertime  I usually go skating and go to escape games in order to practice and enhance my problem-solving skills. Moreover, I also like going to the movie theatre to catch my favourite movie on the big screen.</p>
-          <p>My current goal in life is to successfully pass all my courses in my program while maintaining an excellent GPA record. After I graduate, I am aiming in getting into a reputable company where my training, knowledge, and skills will be an attribute and asset to the continual growth and development of my employer, as well as my co-workers. Once I establish myself, I want to become an inspiration to others and spread awareness that success has no timeline. If you believe in yourself, you will always do great things and find a way to achieve all your goals in life.</p>
-          </article>
-        </section>
-        <aside class="col-md-3">
-          <h2>Coming Soon</h2>
-          <p>Stay tuned for future updates and upcoming information!</p>
-        </aside>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified Bootstrap 3.4.1 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <title>WEB322 - Assignment Template</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand" href="#">WEB322 - Andrea Robles</span>
       </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/blog">Blog</a></li>
+          <li class="active"><a href="/about">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/posts">Posts</a></li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/posts/add">Add Post</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div class="container" style="padding-top:60px">
+    <div class="row">
+      <section class="main col-md-9">
+        <article>
+          <h2>About</h2>
+          <p>Hi there, my name is Andrea Robles, and I am currently enrolled in Computer Programming and Analysis at
+            Seneca College, Newnham campus. I am in my third semester and so far I am really enjoying being in this
+            program. I also graduated and have a diploma in Dental Hygiene from Oxford College of Business, Arts, and
+            Technology. I am currently working part-time at a dental office as an office administrator/patient
+            coordinator while studying full-time at the same time. Ever since I was in high school, I have always been
+            interested in studying computers, however, most of my family members are in the dental career field that is
+            why I got pressured to take a career that would fit in. During the time that I was working in the dental
+            office, I realized that this career is not for me, so I took the big decision of changing my career by
+            applying at Seneca College in order to get into the Computer Programming and Analysis program. I believe
+            that if given a chance at obtaining something that will make us happy, it is worth the risk. Life is too
+            short to live with regrets, and at this point, I can confidently say that I am happy with the decision I
+            made in pursuing the Computer Programming and Analysis program.</p>
+          <p>During my free time, I do a lot of outdoor and indoor activities with my family and friends. For instance,
+            when it is summertime I go hiking, fishing, and camping in different areas here in Ontario that I have not
+            been to. I also like doing yoga and pilates in order to stay fit physically and mentally. In addition, I
+            also want to share my favourite hobby during summer which is doing obstacle courses at Treetop Trekking. On
+            the other hand, when it is wintertime I usually go skating and go to escape games in order to practice and
+            enhance my problem-solving skills. Moreover, I also like going to the movie theatre to catch my favourite
+            movie on the big screen.</p>
+          <p>My current goal in life is to successfully pass all my courses in my program while maintaining an excellent
+            GPA record. After I graduate, I am aiming in getting into a reputable company where my training, knowledge,
+            and skills will be an attribute and asset to the continual growth and development of my employer, as well as
+            my co-workers. Once I establish myself, I want to become an inspiration to others and spread awareness that
+            success has no timeline. If you believe in yourself, you will always do great things and find a way to
+            achieve all your goals in life.</p>
+        </article>
+      </section>
+      <aside class="col-md-3">
+        <h2>Coming Soon</h2>
+        <p>Stay tuned for future updates and upcoming information!</p>
+      </aside>
     </div>
+  </div>
 
-    <!-- Latest compiled and minified jQuery 3.6.0 JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified jQuery 3.6.0 JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <!-- Latest compiled and minified Bootstrap 3.4.1 JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-  </body>
+  <!-- Latest compiled and minified Bootstrap 3.4.1 JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

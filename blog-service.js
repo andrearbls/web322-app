@@ -75,31 +75,36 @@ module.exports.addPost = (postData) => {
 }
 
 
-module.exports.getPostsByCategory = (category) => {
+module.exports.getPostsByCategory = (category) => { 
     return new Promise((resolve, reject) => {
         let filteredPosts = posts.filter(a => a.category == category);
 
-        resolve(filteredPosts);
-    });
-}
+        if (filteredPosts.length == 0) {
+            reject("no results returned"); return;
+        } 
+       resolve(filteredPosts);     
+    })
+};
 
 
 module.exports.getPostsByMinDate = (minDateStr) => {
     return new Promise((resolve, reject) => {
-        let filteredPosts = posts.filter(a => new Date(a.postDate) > new Date(minDateStr));
-        
-        resolve(filteredPosts);
+        let filteredDate = posts.filter(a => new Date(a.postDate) > new Date(minDateStr));
+       
+        if (filteredDate.length == 0) {
+            reject("no results returned"); return;
+        } 
+        resolve(filteredDate);
     });
 }
 
-module.exports.getPostByID = (id) => {
+module.exports.getPostById = (id) => {
     return new Promise((resolve, reject) => {
-        let filteredPost = [];
-
-        posts.forEach((post) => {
-            if (post.id == id) filteredPost.push(post);
-        });
-
-        filteredPost.length == 1 ? resolve(filteredPost) : reject("no results returned");
-    });
+        let filteredPost = posts.filter(a => a.id == id);
+        
+        if (filteredPost.length == 0) {
+            reject("no results returned"); return;
+        } 
+       resolve(filteredPost);     
+    })
 }

@@ -4,7 +4,7 @@
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
-* Name: Andrea Robles        Student ID: 072128127        Date: February , 2022
+* Name: Andrea Robles        Student ID: 072128127        Date: February 17, 2022
 *
 * Online (Heroku) Link: https://web322-andrea.herokuapp.com/about
 *
@@ -30,6 +30,7 @@ const HTTP_PORT = process.env.PORT || 8080;
 
 app.use(express.static("public"));
 
+
 app.get("/", (req, res) => {
     res.redirect('/about');
 });
@@ -37,6 +38,19 @@ app.get("/", (req, res) => {
 
 app.get("/about", (req, res) => {
     res.sendFile(path.join(__dirname, "/views/about.html"));
+});
+
+
+app.get("/posts/add", (req, res) => {
+    res.sendFile(path.join(__dirname, "/views/addPost.html"));
+});
+
+
+cloudinary.config({
+    cloud_name: 'andrearobles',
+    api_key: '863738236845795',
+    api_secret: 'IoQxhecV3IcLGLh0c_Z0i7_0kYA',
+    secure: true
 });
 
 
@@ -57,23 +71,27 @@ app.get("/posts", (req, res) => {
     if (category) {
         blogservice.getPostsByCategory(category).then(data => {
             res.send(data);
+        }).catch(err=>{
+            res.send({message: err});
         });
     }
     else if (minDate != "" && minDate != null) {
         blogservice.getPostsByMinDate(minDate).then(data => {
             res.send(data);
+        }).catch(err=>{
+            res.send({message: err});
         });
     }
     else {
         blogservice.getAllPosts().then(data => {
             res.send(data);
+        }).catch(err=>{
+            res.send({message: err});
         })
     }
 });
 
-// if (minDate != "" && minDate != null) {
-//     data = blogservice.getPostsByMinDate(minDate, data);
-// }
+
 app.get("/categories", (req, res) => {
     blogservice.getCategories().then(data => {
         res.send(categories);
@@ -83,20 +101,8 @@ app.get("/categories", (req, res) => {
 });
 
 
-// Part 1 and Part 2 (Assignment 3)
 
-
-app.get("/posts/add", (req, res) => {
-    res.sendFile(path.join(__dirname, "/views/addPost.html"));
-});
-
-
-cloudinary.config({
-    cloud_name: 'andrearobles',
-    api_key: '863738236845795',
-    api_secret: 'IoQxhecV3IcLGLh0c_Z0i7_0kYA',
-    secure: true
-});
+// Assignment 3 - (Part 2:  Step 2)
 
 
 app.post('/posts/add', upload.single("featureImage"), (req, res) => {
@@ -145,51 +151,12 @@ app.post('/posts/add', upload.single("featureImage"), (req, res) => {
 
 
 
-// Part 3: (Step 1)
+// Assignment 3 - (Part 3:  Step 2)
 
-// app.get("/posts", (req, res) => {
-//     if (req.query.category) {
-//         blogservice.getPostsByCategory(req.query.category).then((filteredPosts) => {
-//            res.json(filteredPosts);
-//         }).catch((err) => {
-//             res.json({message: err});
-//         })
-//     }
-//     else if (req.query.minDate) {
-//         blogservice.getPostsByMinDate(req.query.minDate).then((filteredPosts) => {
-//             res.json(filteredPosts);
-//         }).catch((err) => {
-//             res.json({message: err});
-//         })
-//     }
-//     else {
-//         blogservice.getAllPosts().then((posts) => {
-//             res.json(posts);
-//         }).catch((err) => {
-//             res.json({message: err});
-//         })
-//     }
-// });
-
-// app.get("/posts/category/:value", (req, res) => {
-//     let val = req.params.value;
-
-//     blogservice.getPostsByCategory(val).then(data => {
-//         console.log("About to send data to json...");
-//         res.json(data);
-//     }).catch(err => {
-//         console.log("ERROR!" + err);
-//     });
-// });
-
-// Part 3: (Step 2)
-
-app.get("/posts/:value", (req, res) => {
-    let id = req.params.value;
-
-    blogservice.getPostById(id).then((data => {
-        res.json(data);
-    })).catch(err => {
+app.get('/post/:value', (req, res) => {
+    blogservice.getPostById(req.params.value).then((data) => {
+        res.json({data});
+    }).catch(err => {
         res.json({ message: err });
     });
 });

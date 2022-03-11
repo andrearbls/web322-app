@@ -1,12 +1,12 @@
 /*********************************************************************************
-* WEB322 – Assignment 02
+* WEB322 – Assignment 04
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
 * Name: Andrea Robles        Student ID: 072128127        Date: March 10, 2022
 *
-* Online (Heroku) Link: https://web322-andrea.herokuapp.com/about
+* Online (Heroku) Link: https://web322-andrea.herokuapp.com/blog
 *
 ********************************************************************************/
 

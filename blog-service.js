@@ -1,3 +1,4 @@
+const { get } = require("express/lib/response");
 const fs = require("fs");
 const { resolve } = require("path");
 
@@ -34,10 +35,8 @@ module.exports.getAllPosts = function () {
         } else {
             resolve(posts);
         }
-
     });
 }
-
 
 
 module.exports.getPublishedPosts = function () {
@@ -47,7 +46,6 @@ module.exports.getPublishedPosts = function () {
         } else {
             resolve(posts);
         }
-
     });
 }
 
@@ -64,10 +62,18 @@ module.exports.getCategories = function () {
 
 
 // Assignment 3 
+// Assignment 4
 
 module.exports.addPost = (postData) => {
     return new Promise((resolve, reject) => {
         postData.published = (postData.published) ? true : false;
+        
+        const date = new Date();
+        const postedDate = `${date.getFullYear()}-${
+            (date.getMonth() < 10 ? "0" : "") + ((date.getMonth()+1))
+        }-${(date.getDate() < 10 ? "0" : "") + date.getDate()}`;
+        postData.postDate = postedDate;
+
         postData.id = (posts.length + 1);
         posts.push(postData);
         resolve(posts[posts.length - 1]);
@@ -105,6 +111,21 @@ module.exports.getPostById = (id) => {
         if (filteredPost.length == 0) {
             reject("no results returned"); return;
         } 
-       resolve(filteredPost);     
+       resolve(filteredPost[0]);     
+    })
+}
+
+
+// Assignment 4 - (Part 4: Step 2)
+
+
+module.exports.getPublishedPostsByCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        let publishedPosts = posts.filter(post => post.published == true && post.category == category);
+
+        if (publishedPosts.length == 0) {
+            reject("no results returned"); return;
+        } 
+       resolve(publishedPosts);     
     })
 }

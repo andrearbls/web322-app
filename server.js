@@ -4,7 +4,7 @@
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
-* Name: Andrea Robles      Student ID: 072128127       Date: March 24, 2022
+* Name: Andrea Robles      Student ID: 072128127       Date: April 5, 2022
 *
 * Online (Heroku) Link: https://web322-andrea.herokuapp.com/blog
 *
@@ -14,6 +14,7 @@
 
 const express = require("express");
 const exphbs = require("express-handlebars");
+const authData = require("./auth-service.js");
 const multer = require("multer");
 const upload = multer();
 const cloudinary = require('cloudinary').v2
@@ -24,12 +25,36 @@ const blogservice = require("./blog-service.js");
 const blogData = require("./blog-service");
 const { rmSync } = require("fs");
 const stripJs = require('strip-js');
+const clientSessions = require("client-sessions");
 
 
 const HTTP_PORT = process.env.PORT || 8080;
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+
+
+// Assignment 6
+
+app.use(clientSessions( {
+    cookieName: "session",
+    secret: "web322_a6",
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60
+}));
+
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
+
+function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+      res.redirect("/login");
+    } else {
+      next();
+    }
+}
 
 
 app.engine(".hbs", exphbs.engine({
@@ -89,26 +114,26 @@ app.get("/about", (req, res) => {
 
 // Posts/Add GET Route
 
-app.get("/posts/add", (req, res) => {
+app.get("/posts/add", ensureLogin, (req, res) => {
     blogservice.getCategories()
-    .then(data => res.render("addPost", {categories: data}))
-    .catch(err => {
-        res.render("addPost", {categories: []})
-        console.log(err);
-    });    
+        .then(data => res.render("addPost", { categories: data }))
+        .catch(err => {
+            res.render("addPost", { categories: [] })
+            console.log(err);
+        });
 });
 
 
 // Categories/Add GET Route
 
-app.get("/categories/add", (req, res) => {
+app.get("/categories/add", ensureLogin, (req, res) => {
     res.render(path.join(__dirname, "/views/addCategory.hbs"));
 });
 
 
 // Categories/Add POST Route
 
-app.post("/categories/add", (req, res) => {
+app.post("/categories/add", ensureLogin, (req, res) => {
     blogservice.addCategory(req.body).then(() => {
         res.redirect("/categories");
     })
@@ -117,27 +142,27 @@ app.post("/categories/add", (req, res) => {
 
 // Categories/Delete/:ID Route
 
-app.get("/categories/delete/:id", (req, res) => {
+app.get("/categories/delete/:id", ensureLogin, (req, res) => {
     blogservice.deleteCategoryById(req.params.id)
-    .then(() => {
-        res.redirect("/categories");
-    }).catch(err => {
-        res.status(500).send("Unable to Remove Category / Category not found");
-        console.log(err);
-    });
+        .then(() => {
+            res.redirect("/categories");
+        }).catch(err => {
+            res.status(500).send("Unable to Remove Category / Category not found");
+            console.log(err);
+        });
 });
 
 
 // Posts/Delete/:ID Route
 
-app.get("/posts/delete/:id", (req, res) => {
+app.get("/posts/delete/:id", ensureLogin, (req, res) => {
     blogservice.deletePostById(req.params.id)
-    .then(() => {
-        res.redirect("/posts");
-    }).catch(err => {
-        res.status(500).send("Unable to Remove Post / Post not found");
-        console.log(err);
-    });
+        .then(() => {
+            res.redirect("/posts");
+        }).catch(err => {
+            res.status(500).send("Unable to Remove Post / Post not found");
+            console.log(err);
+        });
 });
 
 
@@ -204,7 +229,7 @@ app.get('/blog', async (req, res) => {
 
 // Posts Route
 
-app.get("/posts", (req, res) => {
+app.get("/posts", ensureLogin, (req, res) => {
     let category = req.query.category;
     let minDate = req.query.minDate;
 
@@ -243,7 +268,7 @@ app.get("/posts", (req, res) => {
 
 // Categories Route
 
-app.get("/categories", (req, res) => {
+app.get("/categories", ensureLogin, (req, res) => {
     blogservice.getCategories().then(data => {
         if (data.length > 0) {
             res.render("categories", { categories: data });
@@ -304,7 +329,7 @@ app.post('/posts/add', upload.single("featureImage"), (req, res) => {
 
 // Post/:Value Route
 
-app.get('/post/:value', (req, res) => {
+app.get('/post/:value', ensureLogin, (req, res) => {
     blogservice.getPostById(req.params.value).then((data) => {
         res.render("post", { post: data })
     }).catch(err => {
@@ -315,7 +340,7 @@ app.get('/post/:value', (req, res) => {
 
 // Blog/:id Route
 
-app.get('/blog/:id', async (req, res) => {
+app.get('/blog/:id', ensureLogin, async (req, res) => {
 
     // Declare an object to store properties for the view
     let viewData = {};
@@ -367,6 +392,58 @@ app.get('/blog/:id', async (req, res) => {
 });
 
 
+// Login
+
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+
+// Register
+
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+
+app.post("/register", (req,res) => {
+    authData.registerUser(req.body)
+    .then(() => res.render("register", {successMessage: "User created" } ))
+    .catch (err => res.render("register", {errorMessage: err, userName:req.body.userName }) )
+});
+
+
+app.post("/login", (req, res) => {
+    req.body.userAgent = req.get('User-Agent');
+    authData.checkUser(req.body).then((user) => {
+        req.session.user = {
+            userName: user.userName,
+            email: user.email,  
+            loginHistory: user.loginHistory 
+        }
+        res.redirect('/posts');
+    }).catch((err) => {
+        res.render("login", {errorMessage: err, userName: req.body.userName});
+    });
+});
+
+
+// Logout
+
+app.get("/logout", (req, res) => {
+    req.session.reset();
+    res.redirect("/");
+});
+
+
+// User History
+
+app.get("/userHistory", ensureLogin, (req, res) => {
+    res.render("userHistory");
+});
+
+
+
 // 404 Error Route
 
 app.use((req, res) => {
@@ -374,13 +451,16 @@ app.use((req, res) => {
 });
 
 
-blogservice.initialize().then(() => {
-    app.listen(HTTP_PORT, function () {
-        console.log(`Express http server listening on port: ${HTTP_PORT}`);
-    });
-}).catch(err => {
-    console.log(err);
-});
+blogservice.initialize()
+    .then(authData.initialize)
+    .then(function () {
+        app.listen(HTTP_PORT, function () {
+            console.log("app listening on: " + HTTP_PORT)
+        });
+    }).catch(function (err) {
+        console.log("unable to start server: " + err);
+    }
+);
 
 
 

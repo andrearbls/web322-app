@@ -109,8 +109,8 @@ module.exports.addPost = (postData) => {
         postData.postDate = new Date();
 
         Post.create(postData)
-            .then(resolve())
-            .catch(reject('unable to create post'))
+        .then(()=>{resolve()})
+        .catch((err)=>{reject('unable to create post')})
     });
 };
 
@@ -206,8 +206,8 @@ module.exports.addCategory = (categoryData) => {
             }
         }
         Category.create(categoryData)
-        .then(resolve())
-        .catch(reject('unable to create category'))
+        .then(()=>{resolve()})
+        .catch((err)=>{reject('unable to create category')})
     });
 };
 
